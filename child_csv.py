@@ -8,12 +8,15 @@ class BabyNamesCSV(ParentClass):
         self.data = pd.read_csv(self.file_path)
 
     def plot_violin(self, column):
+        """Visualize distribution using violin plot."""
         pass
 
     def plot_box(self, column):
+        """Show data spread via box/whisker plot."""
         pass
 
     def plot_scatter(self, x, y):
+        """Visualize numeric relationships."""
         pass
 
     def query_advanced(self, conditions_dict):

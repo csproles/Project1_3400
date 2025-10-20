@@ -16,10 +16,13 @@ class BabyNamesPickle(ParentClass):
         pass
 
     def get_unique_values(self, column):
+        """Return unique values from a categorical column."""
         pass
 
     def generate_permutations(self, column):
+         """Generate permutations of categorical values."""
         pass
 
     def generate_combinations(self, column):
+        """Generate combinations of categorical values."""
         pass
