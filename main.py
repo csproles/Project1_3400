@@ -4,13 +4,15 @@ from lib.parent_class import ParentClass
 from lib.parent_class2 import ParentClass2
 from lib.child_csv import BabyNamesCSV
 from lib.child_pickle import BabyNamesPickle
+from lib.user_interface import UserInterface
 
 def main():
     # Placeholder: user input, query type, etc.
     # Create and test objects of Parent or Child classes
     # Call query(), visualize(), calculate(), export() methods
     # pass
-    print("hello World")
+    
+    UserInterface.start()
 
 if __name__ == "__main__":
     main()
