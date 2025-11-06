@@ -9,20 +9,20 @@ class BabyNamesPickle(ParentClass):
 
     def calculate_probabilities(self):
         """Compute joint and conditional probabilities."""
-        pass
+        # pass
 
     def vector_operations(self, vec1, vec2):
         """Perform dot product, projection, and angle calculations."""
-        pass
+        # pass
 
     def get_unique_values(self, column):
         """Return unique values from a categorical column."""
-        pass
+        # pass
 
     def generate_permutations(self, column):
          """Generate permutations of categorical values."""
-        pass
+        # pass
 
     def generate_combinations(self, column):
         """Generate combinations of categorical values."""
-        pass
+        # pass
