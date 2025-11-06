@@ -20,7 +20,7 @@ class BabyNamesPickle(ParentClass):
         pass
 
     def generate_permutations(self, column):
-         """Generate permutations of categorical values."""
+        """Generate permutations of categorical values."""
         pass
 
     def generate_combinations(self, column):
