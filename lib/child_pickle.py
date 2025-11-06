@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from .parent_class import ParentClass
+from parent_class import ParentClass
 
 class BabyNamesPickle(ParentClass):
     def load_data(self):
