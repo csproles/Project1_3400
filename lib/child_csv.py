@@ -9,16 +9,16 @@ class BabyNamesCSV(ParentClass):
 
     def plot_violin(self, column):
         """Visualize distribution using violin plot."""
-        pass
+        #pass
 
     def plot_box(self, column):
         """Show data spread via box/whisker plot."""
-        pass
+        #pass
 
     def plot_scatter(self, x, y):
         """Visualize numeric relationships."""
-        pass
+        #pass
 
     def query_advanced(self, conditions_dict):
         """Use boolean indexing and lambda functions."""
-        pass
+        #pass

@@ -8,16 +8,16 @@ class ParentClass:
 
     def load_data(self):
         """To be implemented by child classes."""
-        pass
+        #pass
 
     def basic_query(self, column, condition):
         """Filter data by condition."""
-        pass
+        #pass
 
     def plot_histogram(self, column):
         """Create histogram."""
-        pass
+        #pass
 
     def plot_line(self, x_col, y_col):
         """Create line plot."""
-        pass
+        #pass
