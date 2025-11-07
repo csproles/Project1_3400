@@ -1,18 +1,25 @@
+module_name_gl = 'parent_class2'
 
+import sys, os
 import pandas as pd
 import numpy as np
 from config import CONFIG
+sys.path.append(os.path.dirname(os.path.dirname(__file__))) 
 
 class ParentClass2:
+    """Parent class for Pickle-based data operations."""
+
     def __init__(self, file_path=None):
         """Initialize data and configuration."""
         self.file_path = file_path or CONFIG.get("PICKLE_PATH", None)
         self.data = None
 
     def load_data(self):
-        """To be implemented by the child class."""
+        """Placeholder for loading data.
+        To be implemented by the child class."""
         raise NotImplementedError("load_data() must be implemented in the child class.")
 
+    # Statistical Calculations
     def calculate_joint_counts(self, col1, col2):
         """Return joint counts for two categorical columns."""
         if self.data is None:
@@ -20,7 +27,7 @@ class ParentClass2:
         return pd.crosstab(self.data[col1], self.data[col2])
 
     def calculate_joint_probabilities(self, col1, col2):
-        """Return joint probabilities."""
+        """Return joint probabilities for two categorical columns."""
         joint_counts = self.calculate_joint_counts(col1, col2)
         return joint_counts / joint_counts.values.sum()
 
@@ -39,6 +46,7 @@ class ParentClass2:
             "mode": self.data[column].mode().iloc[0],
         }
 
+    # Vector Operations
     def get_position_vector(self, x, y):
         """Return position vector as a NumPy array."""
         return np.array([x, y])
@@ -59,3 +67,13 @@ class ParentClass2:
     def check_orthogonality(self, vec1, vec2, tol=1e-10):
         """Check if two vectors are orthogonal."""
         return abs(np.dot(vec1, vec2)) < tol
+
+# Test code
+def main():
+    print(f"Testing module: {module_name_gl}")
+    parent = ParentClass2()
+    print("ParentClass2 initialized successfully.")
+    print("To load data, use a child class that overrides load_data().")
+
+if __name__ == "__main__":
+    main()
