@@ -10,7 +10,7 @@ def main():
     # Create and test objects of Parent or Child classes
     # Call query(), visualize(), calculate(), export() methods
     # pass
-    print("hello World")
+    print("Ready to work with Spotify Top 100 Data!")
 
 if __name__ == "__main__":
     main()
