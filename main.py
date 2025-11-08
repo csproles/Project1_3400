@@ -11,7 +11,10 @@ def main():
     # Create and test objects of Parent or Child classes
     # Call query(), visualize(), calculate(), export() methods
     # pass
-    PickleChild.load_data()
+    
+    pickleChild = PickleChild()
+    pickleChild.load_data()
+    pickleChild.calculate_joint_probability("year", "artist")
     #UserInterface.start()
     
 
