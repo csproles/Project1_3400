@@ -10,11 +10,22 @@ def main():
     # Placeholder: user input, query type, etc.
     # Create and test objects of Parent or Child classes
     # Call query(), visualize(), calculate(), export() methods
-    # pass
-    
+
+
+    #Testing Child Pickle methods    
     pickleChild = PickleChild()
     pickleChild.load_data()
-    pickleChild.calculate_joint_probability("year", "artist")
+    #print(pickleChild.calculate_joint_probability("year", 2010, "artist", "Usher"))
+    #print(pickleChild.generate_permutations("year"))
+    #print(pickleChild.generate_combinations("year", 2))
+
+    #print(pickleChild.generate_combinations("artist", 2))
+    #print(pickleChild.generate_permutations("artist", 2))
+    
+    print(pickleChild.generate_dot_product("year", "bpm"))
+    print(pickleChild.generate_projection("year", "bpm"))
+    print(pickleChild.generate_angle_calculations("year", "bpm"))
+
     #UserInterface.start()
     
 
