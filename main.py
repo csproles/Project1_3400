@@ -1,4 +1,4 @@
-from config import CONFIG
+from lib.config import CONFIG
 from module_tmp import log_message
 from lib.parent_class import ParentClass
 from lib.parent_class2 import ParentClass2
