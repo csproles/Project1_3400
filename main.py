@@ -31,3 +31,19 @@ def main():
 
 if __name__ == "__main__":
     main()
+    cfg = CSVConfig(
+        csv_path="Spotify_data.csv",
+        parse_dates=(),
+        dtype=None,
+        numeric_cols=("Beats Per Minute", "Danceability", "Energy", "Year"),
+        categorical_cols=("Genre", "artist"),
+        title_prefix="Spotify Data",
+        fig_size=(9, 5),
+    )
+
+    analyzer = BabyNamesCSV(cfg)
+    analyzer.violin_plot()          
+    analyzer.box_whisker_year()        
+    analyzer.scatter_dance_vs_energy()   
+    artist_query = input("Enter an artist name to search: ")
+    analyzer.query_artist_search(artist_query)
