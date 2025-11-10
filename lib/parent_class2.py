@@ -1,7 +1,7 @@
 
 import pandas as pd
 import numpy as np
-from config import CONFIG
+from lib.config import CONFIG
 
 class ParentClass2:
     def __init__(self, file_path=None):
