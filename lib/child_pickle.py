@@ -75,6 +75,7 @@ class PickleChild:
                 #Calclates the joint probability by taking the occurances and dividing it by the total rows
                 joint_prob = joint_occurences / total_rows
 
+                
                 print(f"Probability of {column1}:{a} and {column2}:{b} is {joint_prob:.3f}")
             #
         #
