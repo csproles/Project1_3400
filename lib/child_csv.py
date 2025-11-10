@@ -2,7 +2,7 @@ import pandas as pd
 import seaborn as sns
 from lib.parent_class import ParentClass
 
-class BabyNamesCSV(ParentClass):
+class ChildCSV(ParentClass):
 
     def __init__(self, config: CSVConfig):
         super().__init__(config)        
