@@ -24,7 +24,7 @@ class ChildCSV(ParentClass):
         plt.xticks([1], [column])
         plt.ylabel(column)
 
-        output_folder = Path("Output Data")
+        output_folder = Path("output")
         output_folder.mkdir(parents=True, exist_ok=True)
 
         out_path = out_dir / "Output_Data_Bpm.png"
@@ -57,7 +57,7 @@ class ChildCSV(ParentClass):
         plt.xticks([1], ["Years 2010-2019"])
         plt.ylabel("Year")
 
-        out_dir = Path("Output Data")
+        out_dir = Path("output")
         out_dir.mkdir(parents=True, exist_ok=True)
 
         out_path = out_dir / "Output_Data_Year.png"
@@ -89,7 +89,7 @@ class ChildCSV(ParentClass):
         plt.xlabel(x)
         plt.ylabel(y)
 
-        out_dir = Path("Output Data")
+        out_dir = Path("output")
         out_dir.mkdir(parents=True, exist_ok=True)
 
         out_path = out_dir / "Output_Data_DanceVsEnergy.png"
@@ -99,7 +99,7 @@ class ChildCSV(ParentClass):
 
         print(f"saved scatter plot: {out_path.resolve()}")
     def _ensure_output_dir(self) -> Path:
-        out = Path("Output Data")
+        out = Path("output")
         out.mkdir(parents=True, exist_ok=True)
         return out
 
@@ -135,18 +135,4 @@ class ChildCSV(ParentClass):
             print(f"Saved artist search results -> {csv_path.resolve()}")
 
         return out
-    def plot_violin(self, column):
-        """Visualize distribution using violin plot."""
-        #pass
-
-    def plot_box(self, column):
-        """Show data spread via box/whisker plot."""
-        #pass
-
-    def plot_scatter(self, x, y):
-        """Visualize numeric relationships."""
-        #pass
-
-    def query_advanced(self, conditions_dict):
-        """Use boolean indexing and lambda functions."""
-        #pass
+    
