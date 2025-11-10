@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import itertools
+from config import CONFIG
 
 """
 from parent_class import ParentClass
@@ -16,10 +17,10 @@ class PickleChild:
     """
     def load_data(self):
         #File path for the pkl file
-        pkl_file_path = "Input\SpotifyTop100Data.pkl"
+        pkl_file_path = CONFIG["PICKLE_PATH"]
 
         #File path of the csv file
-        csv_file_path = "Input\SpotifyTop100Data.csv"
+        csv_file_path = CONFIG["CSV_PATH"]
         #Creates a data fram with the csv file
         df = pd.read_csv(csv_file_path)
 
