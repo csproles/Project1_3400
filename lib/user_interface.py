@@ -1,5 +1,5 @@
 import pandas as pd
-from config import CONFIG
+from lib.config import CONFIG
 
 class UserInterface:
     def __init__():

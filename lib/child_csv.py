@@ -1,6 +1,6 @@
 import pandas as pd
 import seaborn as sns
-from parent_class import ParentClass
+from lib.parent_class import ParentClass
 
 class BabyNamesCSV(ParentClass):
     def load_data(self):

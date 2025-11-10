@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt   # for graph creation
-from config import CONFIG
+from lib.config import CONFIG
 
 class ParentClass:
     def __init__(self, file_path=None):

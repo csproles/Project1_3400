@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import itertools
-from config import CONFIG
+from lib.config import CONFIG
 
 """
 from parent_class import ParentClass
