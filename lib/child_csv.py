@@ -1,6 +1,6 @@
-from pathlib import Path
 import pandas as pd
 import matplotlib.pyplot as plt
+from lib.config import CONFIG 
 
 from lib.parent_class import ParentClass, Config
 
