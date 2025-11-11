@@ -2,8 +2,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from lib.config import CONFIG 
 
-from lib.parent_class import ParentClass, Config
-
 
 class childCSV(ParentClass):
     def __init__(self, config: Config):
