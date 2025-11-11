@@ -2,7 +2,7 @@ from lib.config import CONFIG
 from module_tmp import log_message
 from lib.parent_class import ParentClass
 from lib.parent_class2 import ParentClass2
-from lib.parent_class import CSVConfig
+from lib.parent_class import CONFIG
 from lib.child_csv import ChildCSV
 from lib.child_pickle import PickleChild
 from lib.user_interface import UserInterface
@@ -33,7 +33,7 @@ def main():
 
 
 if __name__ == "__main__":
-    cfg = CSVConfig(
+    cfg = CONFIG(
         csv_path="datalab_export_2025-11-06 14_33_01.csv",
         numeric_cols=("Beats Per Minute","Danceability","Energy","Year"),
         categorical_cols=("Genre","artist"),
