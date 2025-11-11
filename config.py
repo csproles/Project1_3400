@@ -1,8 +1,8 @@
 CONFIG = {
-    "CSV_PATH": "input/Popular_Baby_Names.csv",
-    "PICKLE_PATH": "input/baby_names.pkl",
+    "CSV_PATH": "input/SpotifyTop100.csv",
+    "PICKLE_PATH": "input/SpotifyTop100.pkl",
     "EXPORT_FOLDER": "output/",
-    "DEFAULT_COLUMNS": ["Year", "Gender", "Name", "Count"],
+    "DEFAULT_COLUMNS": ["Title", "Artist", "Genre", "Year", "bpm"],
     "IMAGE_FORMAT": "png",
     "LOG_FILE": "output/logs.txt"
 }
