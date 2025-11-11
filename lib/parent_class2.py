@@ -1,9 +1,9 @@
-module_name_gl = 'parent_class2'
-
 import sys, os
 import pandas as pd
 import numpy as np
 from config import CONFIG
+
+# Ensure project root is in path (for imports)
 sys.path.append(os.path.dirname(os.path.dirname(__file__))) 
 
 class ParentClass2:
@@ -70,10 +70,8 @@ class ParentClass2:
 
 # Test code
 def main():
-    print(f"Testing module: {module_name_gl}")
+    print("Testing ParentClass2")
     parent = ParentClass2()
     print("ParentClass2 initialized successfully.")
     print("To load data, use a child class that overrides load_data().")
 
-if __name__ == "__main__":
-    main()

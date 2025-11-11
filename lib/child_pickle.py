@@ -26,3 +26,15 @@ class BabyNamesPickle(ParentClass):
     def generate_combinations(self, column):
         """Generate combinations of categorical values."""
         # pass
+
+
+# Implement the `load_data()` method to load data from a pickle file using pandas (pd.read_pickle()).
+# You can then test it with:
+#
+#     if __name__ == "__main__":
+#         child = ChildPickle()
+#         data = child.load_data()
+#         print(data.head())
+#
+# Make sure config.py defines CONFIG["PICKLE_PATH"]
+# pointing to the pickle file you’ll use.
