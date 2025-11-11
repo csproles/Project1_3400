@@ -2,11 +2,11 @@ from pathlib import Path
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from lib.parent_class import ParentClass, CSVConfig
+from lib.parent_class import ParentClass, Config
 
 
 class childCSV(ParentClass):
-    def __init__(self, config: CSVConfig):
+    def __init__(self, config: Config):
         super().__init__(config)    
         self.df = self.read_csv()     
 
