@@ -6,7 +6,7 @@ from lib.user_interface import UserInterface
 
 def main():
     cfg = CONFIG
-
+    """
     # ----------- Child CSV Testing -----------
     print(" Testing childCSV methods ")
     analyzer_csv = childCSV(cfg)
@@ -48,6 +48,10 @@ def main():
     analyzer_parent.top_10_artists()
 
     print("\nAll processing complete.")
+
+    """
+    ui = UserInterface()
+    ui.start()
 
 if __name__ == "__main__":
     main()
