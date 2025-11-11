@@ -3,11 +3,12 @@ import matplotlib.pyplot as plt   # for graph creation
 from lib.config import CONFIG
 
 class ParentClass:
-    def __init__(self, file_path=None):
-        # load file path from argument or CONFIG
-        self.file_path = file_path or CONFIG["CSV_PATH"] #if no specific file is given, it pulls from config
+    def __init__(self, config=None):
+        #initialize w/ option config or call back to dict
+        self.config = config or CONFIG
+        self.file_path = self.config["CSV_PATH"]
         self.data = None
-
+        
     def load_data(self):
         """load data from CSV into a pandas DataFrame"""
         try:

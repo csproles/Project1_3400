@@ -1,12 +1,20 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
+from pathlib import Path
 from lib.config import CONFIG 
-
+from lib.parent_class import ParentClass
 
 class childCSV(ParentClass):
-    def __init__(self, config: Config):
+    def __init__(self, config=CONFIG):
         super().__init__(config)    
-        self.df = self.read_csv()     
+        self.df = pd.read_csv(config["CSV_PATH"])   
+
+        self.df.rename(columns={
+            "bpm": "Beats Per Minute",
+            "year": "Year",
+            "top genre": "Genre"
+        }, inplace=True)  
 
     def _ensure_output_dir(self) -> Path:
         out_dir = Path("Output")
@@ -23,8 +31,8 @@ class childCSV(ParentClass):
         self._require_cols([column])
 
         df = self.df
-        plt.figure(figsize=self.config.fig_size)
-        plt.title(f"{self.config.title_prefix}: Violin ({column})")
+        plt.figure(figsize=self.config["fig_size"])
+        plt.title(f"{self.config["title_prefix"]}: Violin ({column})")
         plt.grid(True, linestyle="--", alpha=0.3)
 
         data = [df[column].dropna().values]
@@ -49,8 +57,8 @@ class childCSV(ParentClass):
         if df.empty:
             raise ValueError("No rows found for Year in [2010, 2019].")
 
-        plt.figure(figsize=self.config.fig_size)
-        plt.title(f"{self.config.title_prefix}: Box & Whisker (Years 2010–2019)")
+        plt.figure(figsize=self.config["fig_size"])
+        plt.title(f"{self.config["title_prefix"]}: Box & Whisker (Years 2010–2019)")
         plt.grid(True, linestyle="--", alpha=0.3)
 
         plt.boxplot([df[column].values], notch=True, vert=True)
@@ -65,22 +73,30 @@ class childCSV(ParentClass):
         print(f"Saved year box plot -> {out_path.resolve()}")
 
     def scatter_dance_vs_energy(self):
-        x, y = "Danceability", "Energy"
+        x, y = "Beats Per Minute", "Year"
         self._require_cols([x, y])
 
         df = self.df.dropna(subset=[x, y]).copy()
 
-        plt.figure(figsize=self.config.fig_size)
-        plt.title(f"{self.config.title_prefix}: {x} vs {y}")
+        plt.figure(figsize=self.config["fig_size"])
+        plt.title(f"{self.config["title_prefix"]}: {x} vs {y}")
         plt.grid(True, linestyle="--", alpha=0.3)
 
-        plt.scatter(df[x], df[y], alpha=0.8)
+        years = sorted(df[y].unique())
+        year_to_pos = {year: i for i, year in enumerate(years)}
+        y_positions = df[y].map(year_to_pos)
+
+        jitter_strength = 3
+        x_jittered = df[x] + np.random.normal(0, jitter_strength, size=len(df))
+
+        
+        plt.scatter(x_jittered, y_positions, alpha=0.8)
         plt.xlabel(x)
         plt.ylabel(y)
-        plt.xlim(0, 200)
-        plt.ylim(0, 200)
+        plt.yticks(list(year_to_pos.values()), list(year_to_pos.keys()))
+        
 
-        out_path = self._ensure_output_dir() / "Output_Data_DanceVsEnergy.png"
+        out_path = self._ensure_output_dir() / "Output_Data_YearVsBpm.png"
         plt.tight_layout()
         plt.savefig(out_path, dpi=200, bbox_inches="tight")
         plt.show()

@@ -4,5 +4,7 @@ CONFIG = {
     "EXPORT_FOLDER": "./output/",
     "DEFAULT_COLUMNS": ["title", "artist", "top genre", "year", "bpm"],
     "IMAGE_FORMAT": "png",
-    "LOG_FILE": "./output/logs.txt"
+    "LOG_FILE": "./output/logs.txt",
+    "fig_size": (9, 5),
+    "title_prefix": "Spotify Data"
 }
