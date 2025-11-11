@@ -11,7 +11,7 @@ class childCSV(ParentClass):
         self.df = self.read_csv()     
 
     def _ensure_output_dir(self) -> Path:
-        out_dir = Path("Output Data")
+        out_dir = Path("Output")
         out_dir.mkdir(parents=True, exist_ok=True)
         return out_dir
 
