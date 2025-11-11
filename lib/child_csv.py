@@ -1,20 +1,30 @@
+from pathlib import Path
 import pandas as pd
-import seaborn as sns
-from lib.parent_class import ParentClass
+import matplotlib.pyplot as plt
 
-class ChildCSV(ParentClass):
+from lib.parent_class import ParentClass, CSVConfig
 
+
+class childCSV(ParentClass):
     def __init__(self, config: CSVConfig):
-        super().__init__(config)        
-        self.df = self.read_csv()         
+        super().__init__(config)    
+        self.df = self.read_csv()     
+
+    def _ensure_output_dir(self) -> Path:
+        out_dir = Path("Output Data")
+        out_dir.mkdir(parents=True, exist_ok=True)
+        return out_dir
+
+    def _require_cols(self, cols):
+        missing = [c for c in cols if c not in self.df.columns]
+        if missing:
+            raise KeyError(f"Missing required column(s): {missing}")
 
     def violin_plot(self):
         column = "Beats Per Minute"
-
         self._require_cols([column])
 
         df = self.df
-
         plt.figure(figsize=self.config.fig_size)
         plt.title(f"{self.config.title_prefix}: Violin ({column})")
         plt.grid(True, linestyle="--", alpha=0.3)
@@ -23,116 +33,82 @@ class ChildCSV(ParentClass):
         plt.violinplot(dataset=data, showmeans=True, showmedians=True)
         plt.xticks([1], [column])
         plt.ylabel(column)
+        plt.ylim(0, 200) 
 
-        output_folder = Path("output")
-        output_folder.mkdir(parents=True, exist_ok=True)
-
-        out_path = out_dir / "Output_Data_Bpm.png"
+        out_path = self._ensure_output_dir() / "Output_Data_Bpm.png"
         plt.tight_layout()
         plt.savefig(out_path, dpi=200, bbox_inches="tight")
         plt.show()
-
-        print(f"saved plot to: {out_path.resolve()}")
+        print(f"Saved violin plot -> {out_path.resolve()}")
 
     def box_whisker_year(self):
         column = "Year"
-
         self._require_cols([column])
 
         df = self.df.copy()
-
-        df[column] = pd.to_numeric(df[column], errors="coerce")
-
+        # filter 2010–2019
         df = df[(df[column] >= 2010) & (df[column] <= 2019)].dropna(subset=[column])
-
         if df.empty:
-            raise ValueError("no rows found between 2010 and 2019")
+            raise ValueError("No rows found for Year in [2010, 2019].")
 
         plt.figure(figsize=self.config.fig_size)
-        plt.title("Spotify Data: Year Distribution (2010–2019)")
+        plt.title(f"{self.config.title_prefix}: Box & Whisker (Years 2010–2019)")
         plt.grid(True, linestyle="--", alpha=0.3)
 
         plt.boxplot([df[column].values], notch=True, vert=True)
+        plt.xticks([1], ["Years 2010–2019"])
+        plt.ylabel(column)
+        plt.ylim(2010, 2019)
 
-        plt.xticks([1], ["Years 2010-2019"])
-        plt.ylabel("Year")
-
-        out_dir = Path("output")
-        out_dir.mkdir(parents=True, exist_ok=True)
-
-        out_path = out_dir / "Output_Data_Year.png"
-
+        out_path = self._ensure_output_dir() / "Output_Data_Year.png"
         plt.tight_layout()
         plt.savefig(out_path, dpi=200, bbox_inches="tight")
         plt.show()
+        print(f"Saved year box plot -> {out_path.resolve()}")
 
-        print(f"saved year box plot: {out_path.resolve()}")
     def scatter_dance_vs_energy(self):
-        x = "Danceability"
-        y = "Energy"
-
+        x, y = "Danceability", "Energy"
         self._require_cols([x, y])
 
-        df = self.df.copy()
-
-        df[x] = pd.to_numeric(df[x], errors="coerce")
-        df[y] = pd.to_numeric(df[y], errors="coerce")
-
-        df = df.dropna(subset=[x, y])
+        df = self.df.dropna(subset=[x, y]).copy()
 
         plt.figure(figsize=self.config.fig_size)
-        plt.title("Spotify Data: Danceability vs Energy")
+        plt.title(f"{self.config.title_prefix}: {x} vs {y}")
         plt.grid(True, linestyle="--", alpha=0.3)
 
         plt.scatter(df[x], df[y], alpha=0.8)
-
         plt.xlabel(x)
         plt.ylabel(y)
+        plt.xlim(0, 200)
+        plt.ylim(0, 200)
 
-        out_dir = Path("output")
-        out_dir.mkdir(parents=True, exist_ok=True)
-
-        out_path = out_dir / "Output_Data_DanceVsEnergy.png"
+        out_path = self._ensure_output_dir() / "Output_Data_DanceVsEnergy.png"
         plt.tight_layout()
         plt.savefig(out_path, dpi=200, bbox_inches="tight")
         plt.show()
+        print(f"Saved scatter plot -> {out_path.resolve()}")
 
-        print(f"saved scatter plot: {out_path.resolve()}")
-    def _ensure_output_dir(self) -> Path:
-        out = Path("output")
-        out.mkdir(parents=True, exist_ok=True)
-        return out
-
-    def query_artist_search(
-        self,
-        artist_name: str,
-        *,
-        save_csv: bool = True,
-    ) -> pd.DataFrame:
+    def query_artist_search(self, artist_name: str, *, save_csv: bool = True) -> pd.DataFrame:
+        """Boolean indexing: return rows where 'artist' contains name (case-insensitive)."""
+        for c in ["artist", "title"]:
+            if c not in self.df.columns:
+                raise KeyError(f"Required column missing: {c!r}")
 
         df = self.df.copy()
-
-        if "artist" not in df.columns:
-            raise KeyError("Column 'artist' not found in dataset")
-        if "title" not in df.columns:
-            raise KeyError("Column 'title' not found in dataset")
-
         mask = df["artist"].astype("string").str.contains(artist_name, case=False, na=False)
         out = df[mask].copy()
 
         preferred = [
             "artist", "title", "Year", "Beats Per Minute",
-            "Danceability", "Energy", "Genre", "Popularity", "Rank"
+            "Danceability", "Energy", "Genre", "Popularity", "Rank",
         ]
         keep = [c for c in preferred if c in out.columns]
         if keep:
             out = out[keep]
 
         if save_csv:
-            out_dir = self._ensure_output_dir()
-            csv_path = out_dir / "Output_Data_Artist_Search.csv"
-            out.to_csv(csv_path, index=False)
-            print(f"Saved artist search results -> {csv_path.resolve()}")
+            out_path = self._ensure_output_dir() / "Output_Data_Artist_Search.csv"
+            out.to_csv(out_path, index=False)
+            print(f"Saved artist search CSV ({len(out)} rows) -> {out_path.resolve()}")
 
         return out
-    
