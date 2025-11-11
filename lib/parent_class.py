@@ -1,6 +1,10 @@
 import pandas as pd
 import matplotlib.pyplot as plt   # for graph creation
+import numpy as np
 from lib.config import CONFIG
+from scipy.interpolate import make_interp_spline
+
+
 
 class ParentClass:
     def __init__(self, config=None):
@@ -8,7 +12,7 @@ class ParentClass:
         self.config = config or CONFIG
         self.file_path = self.config["CSV_PATH"]
         self.data = None
-        
+
     def load_data(self):
         """load data from CSV into a pandas DataFrame"""
         try:
@@ -77,7 +81,7 @@ class ParentClass:
 
 
 
-    def plot_line(self, x_col, y_col):
+    def plot_line(self, x_col, y_col, smooth=True):
         ''' takes x_column to plot the name on x-axis, ditto for y_column
         overall - plot line graph of one column vs another.
         '''
@@ -90,22 +94,39 @@ class ParentClass:
             return
         ''' checks both the specified column names exist in datagrame, otherwise prints message'''
         
-        plt.plot(self.data[x_col], self.data[y_col], marker='o', linestyle='-', color='teal')
-        ''' 
-        plt.plot - matplotlib function makes a line plot
-        self.data[x_column] - takes the series of x-vals from dataframe
-        self.data[y_column] - ditto for y-vals
-        color - again, up for change
-        marker='o' - adds circle markers at each data point'''
-        plt.title(f"{y_col} vs {x_col}")
-        # sets title of chart dynamically
-        plt.xlabel(x_col)
-        plt.ylabel(y_col)
-        # label axes with column names
-        plt.grid(True)
-        # adds a grid to the background
+        df_agg = self.data.groupby(x_col)[y_col].mean().reset_index()
+        x = df_agg[x_col]
+        y = df_agg[y_col]
+
+        plt.figure(figsize =(8, 5))
+        ''' fixed uglies '''
+        
+        if smooth and np.issubdtype(x.dtype, np.number) and np.issubdtype(y.dtype, np.number):
+            try:
+                x_values = x.values
+                y_values = y.values
+                num_points = len(x_values)
+                k = min(3, num_points - 1)
+                if k < 1:
+                    raise ValueError("Not enough points for spline smoothing")
+                spline = make_interp_spline(x, y, k=3)
+                x_smooth = np.linspace(x.min(), x.max(), 300)
+                y_smooth = spline(x_smooth)
+                plt.plot(x_smooth, y_smooth, color='teal', linewidth=2, label='Smoothed line')
+                plt.scatter(x_values, y_values, color='coral', label='Original points')
+            except Exception as e:
+                print("Could not smooth line: {e}. Using regular line plot instead.")
+            plt.plot(x, y, marker ='o', linestyle='-', color='teal', linewidth=2)
+        else:
+            plt.plot(x, y, marker='o', linestyle='-', color='teal', linewidth=2)
+
+        plt.title(f"{y_col} vs {x_col}", fontsize=14)
+        plt.xlabel(x_col, fontsize=12)
+        plt.ylabel(y_col, fontsize=12)
+        plt.grid(True, linestyle='--', alpha=0.7)
+        plt.legend()
+        plt.tight_layout()
         plt.show()
-        # shows
 
     def list_all_artists(self):
         """ listing all unique artist names """
@@ -116,13 +137,13 @@ class ParentClass:
     def list_all_genres(self):
         """ listing all unique genres """
         if self.data is not None:
-            return self.data['genre'].unique() # same as prior but for genre
+            return self.data['top genre'].unique() # same as prior but for genre
         print("No data loaded.")
 
     def top_10_artists(self):
         """ display top 10 artists by number of songs in dataset """
         if self.data is not None:
-            top_artists = self.data['artists'].value_counts().head(10)
+            top_artists = self.data['artist'].value_counts().head(10)
             ''' 
             artists - selects artist column
             .value_counts() - counts how many times each artist appears
