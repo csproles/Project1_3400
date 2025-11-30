@@ -151,39 +151,54 @@ class PickleChild:
     #
 
     """
-    Calculates, displays, and exports the POSITION VECTOR
+    Obtains, displays, and exports the POSITION VECTOR
     Position vector: TODO
+    TODO CHECKKKKKKKKKKKKK
     """
 
-    def calculate_position_vector(self, x, y):
+    def obtain_position_vector(self, x, y):
         """Return position vector as a NumPy array."""
         return np.array([x, y])
     #
 
     def display_position_vector(self, x, y):
-        print(f"Array: {self.calculate_position_vector(x, y)}")
+        print(self.obtain_position_vector(x, y))
     #
 
     def export_position_vector(self, x, y):
-        position_vector = self.calculate_position_vector(x, y)
+        position_vector = self.obtain_position_vector(x, y)
         np.save('output\Output_Position_Vector.npy', position_vector)
     #
 
+    """
+    Obtains, displays, and exports the UNIT VECTOR
+    Unit vector: TODO
+    TODO CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+    """
+    def obtain_unit_vector(self, vector):
+        """Return unit vector."""
+        magnitude = np.linalg.norm(vector)
+        return vector / magnitude
+    #
 
+    def display_unit_vector(self, vector):
+        print(self.obtain_unit_vector(vector))
+    #
 
-
-
-
-
+    def export_unit_vector(self, vector):
+        unit_vector = self.obtain_unit_vector(vector)
+        np.save('output\Output_Unit_Vector.npy', unit_vector)
+    #
 
     """
-    Generates the projection of 2 columns
-    ONLY WORKS FOR NUMERICAL COLUMNS
+    Obtains, displays, and exports the PROJECTION VECTOR
+    Unit vector: TODO
+    TODO CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK 
     """
-    def generate_projection(self, column1, column2):
+    def obtain_projection_vector(self, column1, column2):
         #Makes the columns arrays
-        column1_data_arr = self.make_data_to_arr(column1)
-        column2_data_arr = self.make_data_to_arr(column2)
+        column1_data_arr = np.array(column1)
+        column2_data_arr = np.array(column2)
 
         #Projecting column1 onto column2; Using numpy dot products (dot(a,b) / dot(b,b)) * b 
         projection = (np.dot(column1_data_arr, column2_data_arr) / np.dot(column2_data_arr, column2_data_arr)) * column2_data_arr
@@ -192,14 +207,46 @@ class PickleChild:
         return projection
     #
 
+    def display_projection_vector(self, column1, column2):
+        print(self.obtain_projection_vector(column1, column2))
+    #
+
+    def export_projection_vector(self, column1, column2):
+        projection = self.obtain_position_vector(column1, column2)
+        np.save('output\Output_Projection_Vector.npy', projection)
+
+    """
+    Calculates the DOT PRODUCT
+    Dot product: TODO
+    TODO CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+    """
+    def calculate_dot_product(self, vec1, vec2):
+        """Return dot product and angle in degrees."""
+        dot = np.dot(vec1, vec2)
+        angle = np.degrees(
+            np.arccos(dot / (np.linalg.norm(vec1) * np.linalg.norm(vec2)))
+        )
+        return {"dot_product": dot, "angle_deg": angle}
+    #
+
+    """
+    Checks the ORTHOGONALITY
+    Orthogonality: TODO
+    TODO CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+    """
+    def check_orthogonality(self, vec1, vec2, tol=1e-10):
+        """Check if two vectors are orthogonal."""
+        return abs(np.dot(vec1, vec2)) < tol
+    #
+
     """
     Generates the angle calculation of 2 columns
     ONLY WORKS FOR NUMERICAL COLUMNS
     """
     def generate_angle_calculations(self, column1, column2):
         #Makes the columns arrays
-        column1_data_arr = self.make_data_to_arr(column1)
-        column2_data_arr = self.make_data_to_arr(column2)
+        column1_data_arr = np.array(column1)
+        column2_data_arr = np.array(column2)
         
         #Getting the dot then divinding it by the magnitudes
         cos_of_columns = np.dot(column1_data_arr, column2_data_arr) / (np.linalg.norm(column1_data_arr) * np.linalg.norm(column1_data_arr))
@@ -215,14 +262,6 @@ class PickleChild:
     #
 
     """
-    Takes in the column that you want the data from and returns it as a set
-    """
-    def get_unique_values(self, column):
-        #Returns the data as a set (basically a list without repeats)
-        return set(self.pickleFile[column].tolist())
-    #
-
-    """
     Makes a data frame full of all the permutations of a given column
     Permutation: All possible orders of a column given an iterable
     WARNING: CAN BE A LOT FOR YOUR COMPUTER - IT CRASHED MINE BUT I KNOW IT WORKS CAUSE ITS PERFECT FOR THE COLUMNS WITH VERY FEW VALUES (YEAR)
@@ -230,7 +269,7 @@ class PickleChild:
     """
     def generate_permutations(self, column, iterable):
         #Makes a sorted set of all the values in a column
-        column_data = sorted(self.get_unique_values(column))
+        column_data = sorted(self.obtain_unique_values(column))
 
         #Uses itertools to generate all the permutations of the column
         all_column_permutations = list(itertools.permutations(column_data, iterable))
@@ -248,7 +287,7 @@ class PickleChild:
     """
     def generate_combinations(self, column, iterable):
         #Makes a sorted set of all the values in a column
-        column_data = sorted(self.get_unique_values(column))
+        column_data = sorted(self.obtain_unique_values(column))
 
         #Uses itertools to generate all the combinations of the column
         all_column_combinations = list(itertools.combinations(column_data, iterable))
@@ -258,4 +297,12 @@ class PickleChild:
 
         #Returns the data frame
         return df_all_column_combinations
+    #
+
+    """
+    Takes in the column that you want the data from and returns it as a set
+    """
+    def obtain_unique_values(self, column):
+        #Returns the data as a set (basically a list without repeats)
+        return set(self.pickleFile[column].tolist())
     #
