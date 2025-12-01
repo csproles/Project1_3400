@@ -178,6 +178,8 @@ class PickleChild:
     def obtain_unit_vector(self, vector):
         """Return unit vector."""
         magnitude = np.linalg.norm(vector)
+        if magnitude == 0:
+            return np.zeros_like(vector)
         return vector / magnitude
     #
 
@@ -200,8 +202,13 @@ class PickleChild:
         column1_data_arr = np.array(column1)
         column2_data_arr = np.array(column2)
 
+        denom = np.dot(column2_data_arr, column2_data_arr)
+
+        if denom == 0:
+            return np.zeros_like(column2_data_arr)
+
         #Projecting column1 onto column2; Using numpy dot products (dot(a,b) / dot(b,b)) * b 
-        projection = (np.dot(column1_data_arr, column2_data_arr) / np.dot(column2_data_arr, column2_data_arr)) * column2_data_arr
+        projection = (np.dot(column1_data_arr, column2_data_arr) / denom) * column2_data_arr
 
         #Returns projection
         return projection
@@ -221,11 +228,19 @@ class PickleChild:
     TODO CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
     """
     def calculate_dot_product(self, vec1, vec2):
+        vec1 = np.array(vec1)
+        vec2 = np.array(vec2)
         """Return dot product and angle in degrees."""
         dot = np.dot(vec1, vec2)
-        angle = np.degrees(
-            np.arccos(dot / (np.linalg.norm(vec1) * np.linalg.norm(vec2)))
-        )
+        denom = np.linalg.norm(vec1) * np.linalg.norm(vec2)
+
+        if denom == 0:
+            angle = np.nan
+        else:
+            cosθ = dot / denom
+            cosθ = np.clip(cosθ, -1.0, 1.0)
+            angle = np.degrees(np.arccos(cosθ))
+    
         return {"dot_product": dot, "angle_deg": angle}
     #
 
@@ -249,7 +264,12 @@ class PickleChild:
         column2_data_arr = np.array(column2)
         
         #Getting the dot then divinding it by the magnitudes
-        cos_of_columns = np.dot(column1_data_arr, column2_data_arr) / (np.linalg.norm(column1_data_arr) * np.linalg.norm(column1_data_arr))
+        denom = np.linalg.norm(column1_data_arr) * np.linalg.norm(column2_data_arr)
+
+        if denom == 0:
+            return np.nan
+
+        cos_of_columns = np.dot(column1_data_arr, column2_data_arr) / denom
 
         #Avoids rounding errors
         cos_of_columns = np.clip(cos_of_columns, -1.0, 1.0)
@@ -259,7 +279,6 @@ class PickleChild:
 
         #Returns the angle
         return calculate_angle
-    #
 
     """
     Makes a data frame full of all the permutations of a given column
