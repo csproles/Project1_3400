@@ -1,322 +1,175 @@
 import pandas as pd
 from lib.config import CONFIG
 from lib.parent_class2 import ParentClass2
+import matplotlib.pyplot as plt
 
 class UserInterface(ParentClass2):
 
     def start(self):
-
-        self.display_initial_options()
-        initial_choice = -1
         
-        while(initial_choice != 100):
-            initial_choice = int(input("Please Enter Your Selection in number form: "))
+        while True:
+            self.display_initial_options()
+        
+            try:
+                initial_choice = int(input("Please Enter Your Selection in number form: "))
+            except ValueError:
+                self.display_invalid_message()
+                continue
 
-            if(initial_choice == 1):
-                choice = -1
-                while(choice != 100):
-                    self.display_run_options()
-                    choice = int(input("Please Enter Your Selection in number form: "))
-
-                    if(choice == 1):
-                        pass
-                    #
-                    if(choice == 2):
-                        pass
-                    #
-                    if(choice == 3):
-                        pass
-                    #
-                    if(choice == 4):
-                        pass
-                    #
-                    if(choice == 5):
-                        pass
-                    #
-                    if(choice == 6):
-                        pass
-                    #
-                    if(choice == 7):
-                        pass
-                    #
-                    if(choice == 8):
-                        pass
-                    #
-                    if(choice == 9):
-                        pass
-                    #
-                    if(choice == 10):
-                        pass
-                    #
-                    if(choice == 11):
-                        pass
-                    #
-                    if(choice == 12):
-                        pass
-                    #
-                    if(choice == 100):
-                        self.display_exit_message()
-                        exit
-                    #
-                    else:
-                        self.display_invalid_message()
-                    #
-                #
-                exit
-            #
-            if(initial_choice == 2):
-                choice = -1
-                while(choice != 100):
-                    self.display_debug_options()
-                    choice = int(input("Please Enter Your Selection in number form: "))
-
-                    #Parent Generate Histogram
-                    if(choice == 1):
-                        self.analyzer_parent.plot_histogram("year")
-                    #
-                    #Parent Generate Line Plot
-                    if(choice == 2):
-                        self.analyzer_parent.plot_line("year", "bpm")
-                    #
-                    #Parent List All Artists
-                    if(choice == 3):
-                        self.analyzer_parent.list_all_artists()
-                    #
-                    #Parent List All Genres
-                    if(choice == 4):
-                        self.analyzer_parent.list_all_genres()
-                    #
-                    #Parent List Top 10 Artists
-                    if(choice == 5):
-                        self.analyzer_parent.top_10_artists()
-                    #
-                    #Child CSV Generate Violin Plot
-                    if(choice == 6):
-                        self.analyzer_csv.violin_plot()
-                    #
-                    #Child CSV Generate Box Whisker Plot
-                    if(choice == 7):
-                        self.analyzer_csv.box_whisker_year()
-                    #
-                    #Child CSV Generate Scatter Plot
-                    if(choice == 8):
-                        self.analyzer_csv.scatter_dance_vs_energy()
-                    #
-                    #Child CSV Artist Search
-                    if(choice == 9):
-                        artist_query = input("Enter an artist name to search in childCSV: ")
-                        self.analyzer_csv.query_artist_search(artist_query)
-                    #
-                    #Child PKL Display Joint Counts
-                    if(choice == 10):
-                        column1 = input("Enter the first column: ")
-                        column2 = input("Enter the second column: ")
-                        self.analyzer_plk.display_joint_counts_table(column1, column2)
-                    #
-                    #Child PKL Export Joint Counts
-                    if(choice == 11):
-                        column1 = input("Enter the first column: ")
-                        column2 = input("Enter the second column: ")
-                        self.analyzer_plk.export_joint_counts_table(column1, column2)
-                    #
-                    #Child PKL Display Joint Probability
-                    if(choice == 12):
-                        column1 = input("Enter the first column: ")
-                        column2 = input("Enter the second column: ")
-                        self.analyzer_plk.display_joint_probability_table(column1, column2)
-                    #
-                    #Child PKL Export Joint Probability
-                    if(choice == 13):
-                        column1 = input("Enter the first column: ")
-                        column2 = input("Enter the second column: ")
-                        self.analyzer_plk.export_joint_probability_table(column1, column2)
-                    #
-                    #Child PKL Display Conditional Probability
-                    if(choice == 14):
-                        column1 = input("Enter the first column: ")
-                        column2 = input("Enter the second column: ")
-                        self.analyzer_plk.display_conditional_probability_table(column1, column2)
-                    #
-                    #Child PKL Export Conditional Probability
-                    if(choice == 15):
-                        column1 = input("Enter the first column: ")
-                        column2 = input("Enter the second column: ")
-                        self.analyzer_plk.export_conditional_probability_table(column1, column2)
-                    #
-                    #Child PKL Display Mean
-                    if(choice == 16):
-                        column = input("Enter the column: ")
-                        self.analyzer_plk.display_mean(column)
-                    #
-                    #Child PKL Export Mean
-                    if(choice == 17):
-                        column = input("Enter the column: ")
-                        self.analyzer_plk.export_mean(column)
-                    #
-                    #Child PKL Display Median
-                    if(choice == 18):
-                        column = input("Enter the column: ")
-                        self.analyzer_plk.display_median(column)
-                    #
-                    #Child PKL Export Median
-                    if(choice == 19):
-                        column = input("Enter the column: ")
-                        self.analyzer_plk.export_median(column)
-                    #
-                    #Child PKL Display Mode
-                    if(choice == 20):
-                        column = input("Enter the column: ")
-                        self.analyzer_plk.display_mode(column)
-                    #
-                    #Child PKL Export Mode
-                    if(choice == 21):
-                        column = input("Enter the column: ")
-                        self.analyzer_plk.export_mode(column)
-                    #
-                    #Child PKL Display Position Vector
-                    if(choice == 22):
-                        column1 = input("Enter the first column: ")
-                        column2 = input("Enter the second column: ")
-                        self.analyzer_plk.display_position_vector(column1, column2)
-                    #
-                    #Child PKL Export Position Vector
-                    if(choice == 23):
-                        column1 = input("Enter the first column: ")
-                        column2 = input("Enter the second column: ")
-                        self.analyzer_plk.export_position_vector(column1, column2)
-                    #
-                    #Child PKL Display Unit Vector
-                    if(choice == 24):
-                        column1 = input("Enter the first column: ")
-                        column2 = input("Enter the second column: ")
-                        self.analyzer_plk.display_unit_vector(column1, column2)
-                    #
-                    #Child PKL Export Unit Vector
-                    if(choice == 25):
-                        column1 = input("Enter the first column: ")
-                        column2 = input("Enter the second column: ")
-                        self.analyzer_plk.export_unit_vector(column1, column2)
-                    #
-                    #Child PKL Display Projection Vector
-                    if(choice == 26):
-                        column1 = input("Enter the first column: ")
-                        column2 = input("Enter the second column: ")
-                        self.analyzer_plk.display_projection_vector(column1, column2)
-                    #
-                    #Child PKL Export Projection Vector
-                    if(choice == 27):
-                        column1 = input("Enter the first column: ")
-                        column2 = input("Enter the second column: ")
-                        self.analyzer_plk.export_projection_vector(column1, column2)
-                    #
-                    #Child PKL Calculate Dot Product
-                    if(choice == 28):
-                        column1 = input("Enter the first column: ")
-                        column2 = input("Enter the second column: ")
-                        print(self.analyzer_plk.calculate_dot_product(column1, column2))
-                    #
-                    #Child PKL Calculate Orthogonality
-                    if(choice == 29):
-                        column1 = input("Enter the first column: ")
-                        column2 = input("Enter the second column: ")
-                        print(self.analyzer_plk.check_orthogonality(column1, column2))
-                    #
-                    #Child PKL Calculate Angle Calculations
-                    if(choice == 30):
-                        column1 = input("Enter the first column: ")
-                        column2 = input("Enter the second column: ")
-                        print(self.analyzer_plk.generate_angle_calculations(column1, column2))
-                    #
-                    #Child PKL Generate Permutations
-                    if(choice == 31):
-                        column = input("Enter the column: ")
-                        iterable = input("Enter the iterable: ")
-                        print(self.analyzer_plk.generate_permutations(column, iterable))
-                    #
-                    #Child PKL Generate Combinations
-                    if(choice == 32):
-                        column = input("Enter the column: ")
-                        iterable = input("Enter the iterable: ")
-                        print(self.analyzer_plk.generate_combinations(column, iterable))
-                    #
-                    #Child PKL Display Unique Values
-                    if(choice == 33):
-                        column = input("Enter the column: ")
-                        print(self.analyzer_plk.obtain_unique_values(column))
-                    #
-                    #Exit
-                    if(choice == 34):
-                        self.display_exit_message()
-                        exit
-                    #
-                    #If invalid input is put
-                    else:
-                        self.display_invalid_message()
-                    #
-                #
-                exit
-            #
-            if(initial_choice == 100):
+            if initial_choice == 100:
                 self.display_exit_message()
-                exit
-            #
+                exit()
+
+            elif initial_choice == 1:
+                self.run_mode_menu()
+
+            elif initial_choice == 2:
+                self.debug_mode_menu()
+
             else:
                 self.display_invalid_message()
-            #
-        #
+    
+    def show_plot(self, func, *args, **kwargs):
+        result = func(*args, **kwargs)
+        plt.show()
+        return result
+        
+    def run_mode_menu(self):
+        run_actions = {
+        1: lambda: self.show_plot(self.analyzer_csv.violin_plot),
+        2: lambda: self.show_plot(self.analyzer_csv.box_whisker_year),
+        3: lambda: self.show_plot(self.analyzer_csv.scatter_dance_vs_energy),
+        4: lambda: self.analyzer_csv.query_artist_search(
+            input("Enter an artist name to search in childCSV: ")
+        ),
+        5: lambda: print(self.analyzer_plk.calculate_dot_product(
+            input("Enter the first column: "), input("Enter the second column: ")
+        )),
+        6: lambda: print(self.analyzer_plk.generate_projection(
+            input("Enter the first column: "), input("Enter the second column: ")
+        )),
+        7: lambda: print(self.analyzer_plk.generate_angle_calculations(
+            input("Enter the first column: "), input("Enter the second column: ")
+        )),
+        8: lambda: self.show_plot(self.analyzer_parent.plot_histogram, "year"),
+        9: lambda: self.show_plot(self.analyzer_parent.plot_line, "year", "bpm"),
+        10: lambda: print("\n".join(self.analyzer_parent.list_all_artists())),
+        11: lambda: print("\n".join(self.analyzer_parent.list_all_genres())),
+        12: lambda: self.analyzer_parent.top_10_artists(),
+        13: lambda: (self.display_exit_message(), exit())
+}
 
-        # while(choice != 13):
-        #     choice = int(input("Please Enter Your Selection in number form: "))
 
-        #     if(choice == 1):
-        #         self.analyzer_csv.violin_plot()
-        #     #
-        #     if(choice == 2):
-        #         self.analyzer_csv.box_whisker_year()
-        #     #
-        #     if(choice == 3):
-        #         self.analyzer_csv.scatter_dance_vs_energy()
-        #     #
-        #     if(choice == 4):
-        #         artist_query = input("Enter an artist name to search in childCSV: ")
-        #         self.analyzer_csv.query_artist_search(artist_query)
-        #     #
-        #     if(choice == 5):
-        #         column1 = input("Enter the first column: ")
-        #         column2 = input("Enter the second column: ")
-        #         self.pickle_child.generate_dot_product(column1, column2)
-        #     #
-        #     if(choice == 6):
-        #         column1 = input("Enter the first column: ")
-        #         column2 = input("Enter the second column: ")
-        #         self.pickle_child.generate_projection(column1, column2)
-        #     #
-        #     if(choice == 7):
-        #         column1 = input("Enter the first column: ")
-        #         column2 = input("Enter the second column: ")
-        #         self.pickle_child.generate_angle_calculations(column1, column2)
-        #     #
-        #     if(choice == 8):
-        #         self.analyzer_parent.plot_histogram("year")
-        #     #
-        #     if(choice == 9):
-        #         self.analyzer_parent.plot_line("year", "bpm")
-        #     #
-        #     if(choice == 10):
-        #         self.analyzer_parent.list_all_artists()
-        #     #
-        #     if(choice == 11):
-        #         self.analyzer_parent.list_all_genres()
-        #     #
-        #     if(choice == 12):
-        #         self.analyzer_parent.top_10_artists()
-        #     #
-        #     if(choice == 13):
-        #         exit
-        #     #
-        #     else:
-        #         print("INVALID INPUT")
-        #     #
-        # #
-    #
-#
+        
+
+
+        while True:
+            self.display_run_options()
+            try:
+                choice = int(input("Please Enter Your Selection in Number Format:"))
+            except ValueError:
+                self.display_invalid_message()
+                continue
+            
+            action = run_actions.get(choice)
+            if action:
+                action()
+                if choice != 100:
+                    input("Press enter to return to run mode menu.")
+            else:
+                self.display_invalid_message()
+
+# debug submenu
+    def debug_mode_menu(self):
+        actions = {
+            1: lambda: self.analyzer_parent.plot_histogram("year"),
+            2: lambda: self.analyzer_parent.plot_line("year", "bpm"),
+            3: lambda: print("\n".join(self.analyzer_parent.list_all_artists())),
+            4: lambda: print("\n".join(self.analyzer_parent.list_all_genres())),
+            5: self.analyzer_parent.top_10_artists,
+            6: self.analyzer_csv.violin_plot,
+            7: self.analyzer_csv.box_whisker_year,
+            8: self.analyzer_csv.scatter_dance_vs_energy,
+            9: lambda: self.analyzer_csv.query_artist_search(
+                input("Enter an artist name to search in childCSV: ")
+            ),
+            10: lambda : self.analyzer_plk.display_joint_counts_table(
+                input("enter the first column: "), input("enter the second column: ")
+            ),
+            11: lambda: self.analyzer_plk.export_joint_counts_table(
+                input("Enter the first column: "), input("Enter the second column: ")
+            ),
+            12: lambda: self.analyzer_plk.display_joint_probability_table(
+                input("Enter the first column: "), input("Enter the second column: ")
+            ),
+            13: lambda: self.analyzer_plk.export_joint_probability_table(
+                input("Enter the first column: "), input("Enter the second column: ")
+            ),
+            14: lambda: self.analyzer_plk.display_conditional_probability_table(
+                input("Enter the first column: "), input("Enter the second column: ")
+            ),
+            15: lambda: self.analyzer_plk.export_conditional_probability_table(
+                input("Enter the first column: "), input("Enter the second column: ")
+            ),
+            16: lambda: self.analyzer_plk.display_mean(input("Enter the column: ")),
+            17: lambda: self.analyzer_plk.export_mean(input("Enter the column: ")),
+            18: lambda: self.analyzer_plk.display_median(input("Enter the column: ")),
+            19: lambda: self.analyzer_plk.export_median(input("Enter the column: ")),
+            20: lambda: self.analyzer_plk.display_mode(input("Enter the column: ")),
+            21: lambda: self.analyzer_plk.export_mode(input("Enter the column: ")),
+            22: lambda: self.analyzer_plk.display_position_vector(
+                input("Enter the first column: "), input("Enter the second column: ")
+            ),
+            23: lambda: self.analyzer_plk.export_position_vector(
+                input("Enter the first column: "), input("Enter the second column: ")
+            ),
+            24: lambda: self.analyzer_plk.display_unit_vector(
+                input("Enter the first column: "), input("Enter the second column: ")
+            ),
+            25: lambda: self.analyzer_plk.export_unit_vector(
+                input("Enter the first column: "), input("Enter the second column: ")
+            ),
+            26: lambda: self.analyzer_plk.display_projection_vector(
+                input("Enter the first column: "), input("Enter the second column: ")
+            ),
+            27: lambda: self.analyzer_plk.export_projection_vector(
+                input("Enter the first column: "), input("Enter the second column: ")
+            ),
+            28: lambda: print(self.analyzer_plk.calculate_dot_product(
+                input("Enter the first column: "), input("Enter the second column: ")
+            )),
+            29: lambda: print(self.analyzer_plk.check_orthogonality(
+                input("Enter the first column: "), input("Enter the second column: ")
+            )),
+            30: lambda: print(self.analyzer_plk.generate_angle_calculations(
+                input("Enter the first column: "), input("Enter the second column: ")
+            )),
+            31: lambda: print(self.analyzer_plk.generate_permutations(
+                input("Enter the column: "), input("Enter the iterable: ")
+            )),
+            32: lambda: print(self.analyzer_plk.generate_combinations(
+                input("Enter the column: "), input("Enter the iterable: ")
+            )),
+            33: lambda: print(self.analyzer_plk.obtain_unique_values(input("Enter the column: "))),
+            34: lambda: (self.display_exit_message(), exit())
+        }
+
+        while True:
+            self.display_debug_options()
+            try:
+                choice = int(input("Please Enter Your Selection in number form: "))
+            except ValueError:
+                self.display_invalid_message()
+                continue
+
+            action = actions.get(choice)
+            if action:
+                action()
+                if choice != 34:
+                    input("\nPress Enter to return to Debug")
+            else:
+                self.display_invalid_message()
+        
+        
+            
+      
