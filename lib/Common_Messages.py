@@ -5,12 +5,12 @@ filename: parent_class2.py
 """
 
 # project imports 
-from Spotify_CSV_Handler import Spotify_CSV_Handler
-from Spotify_PKL_Handler import Spotify_PKL_Handler
-from Spotify_Data_Handler import Spotify_Data_Handler
 from lib.config import CONFIG
+from lib.Spotify_CSV_Handler import Spotify_CSV_Handler_Class
+from lib.Spotify_PKL_Handler import Spotify_PKL_Handler_Class
+from lib.Spotify_Data_Handler import Spotify_Data_Handler_Class
 
-class Common_Messages:
+class Common_Messages_Class:
     """
     Purpose:
         This class demonstrates TODO
@@ -38,6 +38,7 @@ class Common_Messages:
         OUTPUT:
             None (initializes instance attributes)
         """
+        print("Common_Messages_Class init running")
         cfg = CONFIG
         self.__load_child_csv(cfg)
         self.__load_child_plk()
@@ -53,7 +54,7 @@ class Common_Messages:
         OUTPUT:
             None
         """
-        self.analyzer_csv = Spotify_CSV_Handler(cfg)
+        self.analyzer_csv = Spotify_CSV_Handler_Class(cfg)
         self.analyzer_csv.load_data()
     #
     
@@ -66,7 +67,7 @@ class Common_Messages:
         OUTPUT:
             None
         """
-        self.analyzer_plk = Spotify_PKL_Handler()
+        self.analyzer_plk = Spotify_PKL_Handler_Class()
         self.analyzer_plk.load_data()
     #
 
@@ -79,7 +80,7 @@ class Common_Messages:
         OUTPUT:
             None
         """
-        self.analyzer_parent = Spotify_Data_Handler()
+        self.analyzer_parent = Spotify_Data_Handler_Class()
         self.analyzer_parent.load_data()
     #
 

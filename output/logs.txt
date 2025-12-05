@@ -1,0 +1,16 @@
+2025-12-05 12:06:54,926 - INFO - Initial Options Displayed
+2025-12-05 12:06:58,055 - INFO - Run Mode Entered
+2025-12-05 12:07:20,347 - INFO - Initial Options Displayed
+2025-12-05 12:07:21,923 - INFO - Run Mode Entered
+2025-12-05 12:08:06,919 - INFO - Initial Options Displayed
+2025-12-05 12:08:08,701 - INFO - Run Mode Entered
+2025-12-05 12:11:02,792 - INFO - Initial Options Displayed
+2025-12-05 12:11:05,474 - INFO - Run Mode Entered
+2025-12-05 12:12:42,579 - INFO - Initial Options Displayed
+2025-12-05 12:12:45,118 - INFO - Run Mode Entered
+2025-12-05 12:15:56,608 - INFO - Initial Options Displayed
+2025-12-05 12:15:59,097 - INFO - Run Mode Entered
+2025-12-05 12:19:17,030 - INFO - Initial Options Displayed
+2025-12-05 12:19:17,032 - ERROR - Invalid Entry Made
+2025-12-05 12:19:17,032 - INFO - Initial Options Displayed
+2025-12-05 12:19:19,693 - INFO - Run Mode Entered

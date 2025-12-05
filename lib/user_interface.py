@@ -1,32 +1,49 @@
+import logging
 import pandas as pd
 from lib.config import CONFIG
-from lib.parent_class2 import Common_Messages
+from lib.Common_Messages import Common_Messages_Class
 import matplotlib.pyplot as plt
+#
+class User_Interface_Class(Common_Messages_Class):
 
-class UserInterface(Common_Messages):
+    def __init__(self):
+        print("Loaded class:", self.__class__.__name__)
+        super().__init__()
+        logging.basicConfig(
+            filename = CONFIG["LOG_FILE"],
+            level = logging.INFO,
+            format = '%(asctime)s - %(levelname)s - %(message)s'
+        )
+    #
 
     def start(self):
         
         while True:
             self.display_initial_options()
+            logging.info("Initial Options Displayed")
         
             try:
                 initial_choice = int(input("Please Enter Your Selection in number form: "))
             except ValueError:
+                logging.error("Invalid Entry Made")
                 self.display_invalid_message()
                 continue
 
             if initial_choice == 100:
+                logging.info("Program Exited")
                 self.display_exit_message()
                 exit()
 
             elif initial_choice == 1:
+                logging.info("Run Mode Entered")
                 self.run_mode_menu()
 
             elif initial_choice == 2:
+                logging.info("Debug Mode Entered")
                 self.debug_mode_menu()
 
             else:
+                logging.error("Invalid Entry Made")
                 self.display_invalid_message()
     
     def show_plot(self, func, *args, **kwargs):
@@ -159,6 +176,7 @@ class UserInterface(Common_Messages):
             try:
                 choice = int(input("Please Enter Your Selection in number form: "))
             except ValueError:
+                logging.error("Invalid Entry Made")
                 self.display_invalid_message()
                 continue
 

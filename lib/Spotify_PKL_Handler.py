@@ -11,9 +11,9 @@ import numpy as np
 import pandas as pd
 # project imports 
 from lib.config import CONFIG
-from Spotify_Data_Handler import Spotify_Data_Handler
+from lib.Spotify_Data_Handler import Spotify_Data_Handler_Class
 
-class Spotify_PKL_Handler(Spotify_Data_Handler):
+class Spotify_PKL_Handler_Class(Spotify_Data_Handler_Class):
     """
     Purpose:
         This class demonstrates file handling, processing, and

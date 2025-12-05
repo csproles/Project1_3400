@@ -1,8 +1,8 @@
 from lib.config import CONFIG
-from lib.user_interface import UserInterface
+from lib.User_Interface import User_Interface_Class
 
 def main():
-    ui = UserInterface()
+    ui = User_Interface_Class()
     ui.start()
 
 if __name__ == "__main__":
