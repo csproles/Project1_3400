@@ -20,7 +20,7 @@ class Spotify_PKL_Handler_Class(Spotify_Data_Handler_Class):
         data analysis using pandas, numpy, and itertools 
 
     Instance variables:
-        self. TODO
+        self.pickleFile : pandas DataFrame created from the Spotify CSV → PKL file
 
     Methods:
         - load_data
@@ -385,116 +385,83 @@ class Spotify_PKL_Handler_Class(Spotify_Data_Handler_Class):
         #
     #
 
+    def calculate_std(self, column):
+        #Calculates the standard deviation of a column
+        return self.pickleFile[column].std()
+
+    def display_std(self, column):
+        #Displays the standard deviation of a column
+        print(self.calculate_std(column))
+
+    def export_std(self, column):
+        #Exports the standard deviation to a text file
+        std = self.calculate_std(column)
+        with open(f"output/Output_{column}_Std.txt", "w") as f:
+            f.write(str(std))
+
     def obtain_position_vector(self, x, y):
         """
-        Purpose:
-            To calculate the position vector of TODO what does this want???
-            Position vector definition: A vector that shows the location of a point in space relative to a fixed origin
-            TODO takes what type of data?????
-        INPUT:
-            x (TODO) : TODO
-            y (TODO) : TODO
-        OUTPUT:
-            numpy array
-        """
-        return np.array([x, y])
+    Purpose:
+        Creates a position vector from two numerical inputs.
+        A position vector represents a point's location relative to the origin.
+    INPUT:
+        x (float or int)
+        y (float or int)
+    OUTPUT:
+        numpy array of shape (2,)
+    """
+        return np.array([float(x), float(y)])
     #
 
     def display_position_vector(self, x, y):
-        """
-        Purpose:
-            To display the position vector of TODO what does this want???
-            Position vector definition: A vector that shows the location of a point in space relative to a fixed origin
-            TODO takes what type of data?????
-        INPUT:
-            x (TODO) : TODO
-            y (TODO) : TODO
-        OUTPUT:
-            SAMPLE: (will vary based on the data input)
-            [#, #, #]
-        """
         print(self.obtain_position_vector(x, y))
     #
 
     def export_position_vector(self, x, y):
-        """
-        Purpose:
-            To export the position vector of TODO what does this want??? to a file
-            Position vector definition: A vector that shows the location of a point in space relative to a fixed origin
-            TODO takes what type of data?????
-        INPUT:
-            x (TODO) : TODO
-            y (TODO) : TODO
-        OUTPUT:
-            A npy file
-        """
         position_vector = self.obtain_position_vector(x, y)
         np.save('output\Output_Position_Vector.npy', position_vector)
     #
 
     def obtain_unit_vector(self, vector):
         """
-        Purpose:
-            To calculate the unit vector of TODO what does this want???
-            Unit vector definition: A vector with a magnitude of exactly one, which is used to represent direction without any influence from magnitude. Conceptually, it's a "pure" direction
-            TODO takes what type of data?????
-        INPUT:
-            vector (TODO) : TODO
-        OUTPUT:
-            numpy array
-        """
-        magnitude = np.linalg.norm(vector)
-        if magnitude == 0:
-            return np.zeros_like(vector)
-        return vector / magnitude
+    Purpose:
+        Computes the unit vector (direction vector) of the given vector.
+        A unit vector has magnitude 1 and preserves direction.
+    INPUT:
+        vector (list or array-like of numbers)
+    OUTPUT:
+        numpy array
+    """
+        v = np.array(vector, dtype=float)
+        mag = np.linalg.norm(v)
+        #If magnitude is zero, return zero-vector
+        return v / mag if mag != 0 else np.zeros_like(v)
     #
 
     def display_unit_vector(self, vector):
-        """
-        Purpose:
-            To display the unit vector of TODO what does this want???
-            Unit vector definition: A vector with a magnitude of exactly one, which is used to represent direction without any influence from magnitude. Conceptually, it's a "pure" direction
-            TODO takes what type of data?????
-        INPUT:
-            vector (TODO) : TODO
-        OUTPUT:
-            SAMPLE: (will vary based on the data input)
-            [#, #, #]
-        """
         print(self.obtain_unit_vector(vector))
     #
 
     def export_unit_vector(self, vector):
-        """
-        Purpose:
-            To export the unit vector of TODO what does this want??? to a file
-            Unit vector definition: A vector with a magnitude of exactly one, which is used to represent direction without any influence from magnitude. Conceptually, it's a "pure" direction
-            TODO takes what type of data?????
-        INPUT:
-            vector (TODO) : TODO
-        OUTPUT:
-            A npy file
-        """
         unit_vector = self.obtain_unit_vector(vector)
         np.save('output\Output_Unit_Vector.npy', unit_vector)
     #
 
     def obtain_projection_vector(self, column1, column2):
         """
-        Purpose:
-            To calculate the projection vector of TODO what does this want???
-            Projection vector definition: The "shadow" a vector casts on another vector, as if a light were shining from above
-            TODO takes what type of data?????
-        INPUT:
-           TODO
-        OUTPUT:
-            numpy array
-        """
-        #Makes the columns arrays
+    Purpose:
+        Computes the projection of one vector onto another.
+        Formula: proj_b(a) = (dot(a,b) / dot(b,b)) * b
+    INPUT:
+        column1 (iterable of numbers) – vector 'a'
+        column2 (iterable of numbers) – vector 'b'
+    OUTPUT:
+        numpy array representing projection vector
+    """
         column1_data_arr = np.array(column1)
         column2_data_arr = np.array(column2)
 
-        denom = np.dot(column1_data_arr, column2_data_arr)
+        denom = np.dot(column2_data_arr, column2_data_arr)
 
         if denom == 0:
             return np.zeros_like(column2_data_arr)
@@ -507,79 +474,65 @@ class Spotify_PKL_Handler_Class(Spotify_Data_Handler_Class):
     #
 
     def display_projection_vector(self, column1, column2):
-        """
-        Purpose:
-            To display the projection vector of TODO what does this want???
-            Projection vector definition: The "shadow" a vector casts on another vector, as if a light were shining from above
-            TODO takes what type of data?????
-        INPUT:
-           TODO
-        OUTPUT:
-            SAMPLE: (will vary based on the data input)
-            [#, #, #]
-        """
         print(self.obtain_projection_vector(column1, column2))
     #
 
     def export_projection_vector(self, column1, column2):
-        """
-        Purpose:
-            To export the projection vector of TODO what does this want??? to a file
-            Projection vector definition: The "shadow" a vector casts on another vector, as if a light were shining from above
-            TODO takes what type of data?????
-        INPUT:
-           TODO
-        OUTPUT:
-            A npy file
-        """
-        projection = self.obtain_position_vector(column1, column2)
+        projection = self.obtain_projection_vector(column1, column2)
         np.save('output\Output_Projection_Vector.npy', projection)
-    #
 
     def calculate_dot_product(self, vec1, vec2):
         """
-        Purpose:
-            To calculate the dot product of TODO what does this take????
-            Dot product definition: Measures the extent to which two vectors are aligned.
-            TODO takes what type of data?????
-        INPUT:
-           TODO
-        OUTPUT:
-            dot product and angle in degrees
-        """
-        vec1 = np.array(vec1)
-        vec2 = np.array(vec2)
-        """Return dot product and angle in degrees."""
+    Purpose:
+        Calculates the dot product and angle between two vectors.
+        Dot product measures alignment between vectors.
+    INPUT:
+        vec1 (list/array)
+        vec2 (list/array)
+    OUTPUT:
+        dict with keys:
+        {
+            "dot_product": float,
+            "angle_deg": float or nan
+        }
+    """
+        vec1 = np.array(vec1, dtype = float)
+        vec2 = np.array(vec2, dtype = float)
+        #Computes dot product using numpy
         dot = np.dot(vec1, vec2)
+        #Denominator for angle calculation
         denom = np.linalg.norm(vec1) * np.linalg.norm(vec2)
 
+        #If zero-vector present, angle is undefined
         if denom == 0:
             angle = np.nan
         else:
             cosθ = dot / denom
+            #Avoid rounding issues using clipping
             cosθ = np.clip(cosθ, -1.0, 1.0)
+            #Angle in degrees
             angle = np.degrees(np.arccos(cosθ))
     
+        #Returns both values together
         return {"dot_product": dot, "angle_deg": angle}
     #
 
-    """
-    Checks the ORTHOGONALITY
-    Orthogonality: TODO
-    TODO CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
-    """
     def check_orthogonality(self, vec1, vec2, tol=1e-10):
         """
-        Purpose:
-            Checks if two vectors are orthogonal
-            Orthofonality definition: Means that two or more things are at a right angle (90°) to each other, like the x and y axes in a coordinate plane
-            TODO takes what type of data?????
-        INPUT:
-           TODO
-        OUTPUT:
-           bool
-        """
-        return abs(np.dot(vec1, vec2)) < tol
+    Purpose:
+        Determines whether two vectors are orthogonal (perpendicular).
+        Vectors are orthogonal if their dot product is near zero.
+    INPUT:
+        vec1 (list/array)
+        vec2 (list/array)
+        tol (float) - tolerance for numerical comparison
+    OUTPUT:
+        bool
+    """
+        v1 = np.array(vec1, dtype=float)
+        v2 = np.array(vec2, dtype=float)
+        #Two vectors are orthogonal if their dot product is nearly zero
+        return abs(np.dot(v1, v2)) < tol
     #
 
     """
@@ -619,7 +572,7 @@ class Spotify_PKL_Handler_Class(Spotify_Data_Handler_Class):
         #Returns the angle
         return calculate_angle
 
-    def generate_permutations(self, column):
+    def generate_permutations(self, column, iterable):
         """
         Purpose:
             Makes a data frame full of all the permutations of a given column
@@ -627,15 +580,17 @@ class Spotify_PKL_Handler_Class(Spotify_Data_Handler_Class):
             WARNING: CAN BE A LOT FOR YOUR COMPUTER - IT CRASHED MINE BUT I KNOW IT WORKS CAUSE ITS PERFECT FOR THE COLUMNS WITH VERY FEW VALUES (YEAR)
             Takes Quantative and Qualatative data
         INPUT:
-           column (str)
+           column (str) : the column to pull unique values from
+           iterable (int) : the length of each permutation
         OUTPUT:
            a data frame
         """
         #Makes a sorted set of all the values in a column
         column_data = sorted(self.obtain_unique_values(column))
+        r = int(iterable)
 
         #Uses itertools to generate all the permutations of the column
-        all_column_permutations = list(itertools.permutations(column_data))
+        all_column_permutations = list(itertools.permutations(column_data,r))
 
         #Puts all the permutations into a data frame
         df_all_column_permutations = pd.DataFrame(all_column_permutations)
@@ -672,12 +627,12 @@ class Spotify_PKL_Handler_Class(Spotify_Data_Handler_Class):
     def obtain_unique_values(self, column):
         """
         Purpose:
-            Takes in the column that you want the data from and returns it as a set with only the unique values
+            Takes in the column that you want the data from and returns it as a sorted set with only the unique values
             Takes Quantative and Qualtative Data
         INPUT:
            column (str)
         OUTPUT:
-           returns the data as a set (basically a list without repeats)
+           returns the data as a set (basically a sorted list of uique values) 
         """
-        return set(self.pickleFile[column].tolist())
+        return sorted(set(self.pickleFile[column].tolist()))
     #
