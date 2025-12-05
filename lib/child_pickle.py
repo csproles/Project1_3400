@@ -1,3 +1,5 @@
+import sys, os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import pandas as pd
 import numpy as np
 import itertools
@@ -150,6 +152,17 @@ class PickleChild:
         #
     #
 
+    def calculate_std(self, column):
+        return self.pickleFile[column].std()
+
+    def display_std(self, column):
+        print(self.calculate_std(column))
+
+    def export_std(self, column):
+        std = self.calculate_std(column)
+        with open(f"output/Output_{column}_Std.txt", "w") as f:
+            f.write(str(std))
+    
     """
     Obtains, displays, and exports the POSITION VECTOR
     Position vector: TODO
@@ -158,7 +171,7 @@ class PickleChild:
 
     def obtain_position_vector(self, x, y):
         """Return position vector as a NumPy array."""
-        return np.array([x, y])
+        return np.array([float(x), float(y)])
     #
 
     def display_position_vector(self, x, y):
@@ -176,11 +189,9 @@ class PickleChild:
     TODO CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
     """
     def obtain_unit_vector(self, vector):
-        """Return unit vector."""
-        magnitude = np.linalg.norm(vector)
-        if magnitude == 0:
-            return np.zeros_like(vector)
-        return vector / magnitude
+        v = np.array(vector, dtype=float)
+        mag = np.linalg.norm(v)
+        return v / mag if mag != 0 else np.zeros_like(v)
     #
 
     def display_unit_vector(self, vector):
@@ -219,7 +230,7 @@ class PickleChild:
     #
 
     def export_projection_vector(self, column1, column2):
-        projection = self.obtain_position_vector(column1, column2)
+        projection = self.obtain_projection_vector(column1, column2)
         np.save('output\Output_Projection_Vector.npy', projection)
 
     """
@@ -228,8 +239,8 @@ class PickleChild:
     TODO CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
     """
     def calculate_dot_product(self, vec1, vec2):
-        vec1 = np.array(vec1)
-        vec2 = np.array(vec2)
+        vec1 = np.array(vec1, dtype = float)
+        vec2 = np.array(vec2, dtype = float)
         """Return dot product and angle in degrees."""
         dot = np.dot(vec1, vec2)
         denom = np.linalg.norm(vec1) * np.linalg.norm(vec2)
@@ -251,7 +262,9 @@ class PickleChild:
     """
     def check_orthogonality(self, vec1, vec2, tol=1e-10):
         """Check if two vectors are orthogonal."""
-        return abs(np.dot(vec1, vec2)) < tol
+        v1 = np.array(vec1, dtype=float)
+        v2 = np.array(vec2, dtype=float)
+        return abs(np.dot(v1, v2)) < tol
     #
 
     """
@@ -290,8 +303,11 @@ class PickleChild:
         #Makes a sorted set of all the values in a column
         column_data = sorted(self.obtain_unique_values(column))
 
+        # FIX: convert iterable to int
+        r = int(iterable)
+
         #Uses itertools to generate all the permutations of the column
-        all_column_permutations = list(itertools.permutations(column_data, iterable))
+        all_column_permutations = list(itertools.permutations(column_data, r))
 
         #Puts all the permutations into a data frame
         df_all_column_permutations = pd.DataFrame(all_column_permutations)
@@ -308,8 +324,11 @@ class PickleChild:
         #Makes a sorted set of all the values in a column
         column_data = sorted(self.obtain_unique_values(column))
 
+        # FIX: convert iterable to int
+        r = int(iterable)
+
         #Uses itertools to generate all the combinations of the column
-        all_column_combinations = list(itertools.combinations(column_data, iterable))
+        all_column_combinations = list(itertools.combinations(column_data, r))
 
         #Puts all the cominations into a data frame
         df_all_column_combinations = pd.DataFrame(all_column_combinations)
@@ -323,5 +342,4 @@ class PickleChild:
     """
     def obtain_unique_values(self, column):
         #Returns the data as a set (basically a list without repeats)
-        return set(self.pickleFile[column].tolist())
-    #
+        return sorted(set(self.pickleFile[column].dropna().tolist()))
