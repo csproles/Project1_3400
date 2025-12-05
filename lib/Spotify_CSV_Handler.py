@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
 from lib.config import CONFIG 
-from lib.parent_class import ParentClass
+from lib.parent_class import Spotify_Data_Handler
 
-class childCSV(ParentClass):
+class Spotify_CSV_Handler(Spotify_Data_Handler):
     def __init__(self, config=CONFIG):
         super().__init__(config)    
         self.df = pd.read_csv(config["CSV_PATH"])   

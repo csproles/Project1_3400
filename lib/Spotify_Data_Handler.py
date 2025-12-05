@@ -17,7 +17,7 @@ from lib.config import CONFIG
 
 
 
-class ParentClass:
+class Spotify_Data_Handler:
     """
     Purpose:
         This class demonstrates file handling, processing, and
@@ -405,10 +405,10 @@ class ParentClass:
 # quick demonstration / test 
 if __name__ == "__main__":
     # create class with default CONFIG and inject synthetic data for testing #
-    pc = ParentClass(config={"CSV_PATH": ""})  # #
+    pc = Spotify_Data_Handler(config={"CSV_PATH": ""})  # #
 
     # create and assign artificial dataset for local testing #
-    test_df = ParentClass.create_test_dataset(200)  # #
+    test_df = Spotify_Data_Handler.create_test_dataset(200)  # #
     pc.data = test_df  # #
     print("Artificial test data assigned.", flush=True)  # #
 

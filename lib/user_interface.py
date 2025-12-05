@@ -1,9 +1,9 @@
 import pandas as pd
 from lib.config import CONFIG
-from lib.parent_class2 import ParentClass2
+from lib.parent_class2 import Common_Messages
 import matplotlib.pyplot as plt
 
-class UserInterface(ParentClass2):
+class UserInterface(Common_Messages):
 
     def start(self):
         

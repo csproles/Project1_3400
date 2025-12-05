@@ -11,9 +11,9 @@ import numpy as np
 import pandas as pd
 # project imports 
 from lib.config import CONFIG
-from lib.parent_class import ParentClass
+from Spotify_Data_Handler import Spotify_Data_Handler
 
-class PickleChild(ParentClass):
+class Spotify_PKL_Handler(Spotify_Data_Handler):
     """
     Purpose:
         This class demonstrates file handling, processing, and
@@ -494,7 +494,7 @@ class PickleChild(ParentClass):
         column1_data_arr = np.array(column1)
         column2_data_arr = np.array(column2)
 
-        denom = np.dot(column2_data_arr, column2_data_arr)
+        denom = np.dot(column1_data_arr, column2_data_arr)
 
         if denom == 0:
             return np.zeros_like(column2_data_arr)

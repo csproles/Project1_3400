@@ -5,12 +5,12 @@ filename: parent_class2.py
 """
 
 # project imports 
-from lib.child_csv import childCSV
-from lib.child_pickle import PickleChild
-from lib.parent_class import ParentClass
+from Spotify_CSV_Handler import Spotify_CSV_Handler
+from Spotify_PKL_Handler import Spotify_PKL_Handler
+from Spotify_Data_Handler import Spotify_Data_Handler
 from lib.config import CONFIG
 
-class ParentClass2:
+class Common_Messages:
     """
     Purpose:
         This class demonstrates TODO
@@ -53,7 +53,7 @@ class ParentClass2:
         OUTPUT:
             None
         """
-        self.analyzer_csv = childCSV(cfg)
+        self.analyzer_csv = Spotify_CSV_Handler(cfg)
         self.analyzer_csv.load_data()
     #
     
@@ -66,7 +66,7 @@ class ParentClass2:
         OUTPUT:
             None
         """
-        self.analyzer_plk = PickleChild()
+        self.analyzer_plk = Spotify_PKL_Handler()
         self.analyzer_plk.load_data()
     #
 
@@ -79,7 +79,7 @@ class ParentClass2:
         OUTPUT:
             None
         """
-        self.analyzer_parent = ParentClass()
+        self.analyzer_parent = Spotify_Data_Handler()
         self.analyzer_parent.load_data()
     #
 
