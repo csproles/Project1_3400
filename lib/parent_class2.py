@@ -10,27 +10,34 @@ class ParentClass2:
 
     def __init__(self):
         cfg = CONFIG
+        #Loads the child CSV analyzer (ParentClass -> childCSV)
         self.__load_child_csv(cfg)
+        #Loads the pickle-based analyzer (ParentClass -> PickleChild)
         self.__load_child_plk()
+        #Loads the parent analyzer (ParentClass alone)
         self.__load_parent()
     #
 
     def __load_child_csv(self, cfg):
+        #Creates an instance of childCSV and loads its CSV data
         self.analyzer_csv = childCSV(cfg)
         self.analyzer_csv.load_data()
-    #\
+    #
     
     def __load_child_plk(self):
+        #Creates an instance of PickleChild and loads its PKL data
         self.analyzer_plk = PickleChild()
         self.analyzer_plk.load_data()
     #
 
     def __load_parent(self):
+        #Creates an instance of ParentClass and loads its CSV data
         self.analyzer_parent = ParentClass()
         self.analyzer_parent.load_data()
     #
 
     def display_initial_options(self):
+        #Displays the first set of options (Run or Debug mode)
         print(
             "Welcome to The Three's 3400 Project\n\n"
             "Options:\n"
@@ -40,6 +47,7 @@ class ParentClass2:
     #
 
     def display_run_options(self):
+        #Run-mode menu for end users (general functionality)
         print(
             "Options:\n"
             "1-Generate Violin Plot\n"
@@ -59,6 +67,7 @@ class ParentClass2:
     #
     
     def display_debug_options(self):
+        #Debug options to test each function individually
         print(
             "Parent Options:\n"
             "1-Generate Histogram\n"
@@ -106,11 +115,11 @@ class ParentClass2:
     #
 
     def display_exit_message(self):
+        #Prints exit text when program ends
         print("PROGRAM EXITED")
     #
 
     def display_invalid_message(self):
+        #Prints message for invalid input
         print("INVALID INPUT ENTERED\n")
     #
-
-#

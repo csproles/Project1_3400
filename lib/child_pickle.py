@@ -34,7 +34,6 @@ class PickleChild:
     
     """
     Calculates, displays, and exports the JOINT COUNTS
-    Joint Counts: TODO
     """
 
     #Calulates the joint count of two columns (that the user gives) and makes a table
@@ -100,9 +99,6 @@ class PickleChild:
 
     """
     Calculates, displays, and exports the MEAN, MEDIAN, and MODE
-    Mean: TODO
-    Median: TODO
-    Mode: TODO
     """
 
     #Calculate the mean, median, and mode
@@ -153,20 +149,21 @@ class PickleChild:
     #
 
     def calculate_std(self, column):
+        #Calculates the standard deviation of a column
         return self.pickleFile[column].std()
 
     def display_std(self, column):
+        #Displays the standard deviation of a column
         print(self.calculate_std(column))
 
     def export_std(self, column):
+        #Exports the standard deviation to a text file
         std = self.calculate_std(column)
         with open(f"output/Output_{column}_Std.txt", "w") as f:
             f.write(str(std))
     
     """
     Obtains, displays, and exports the POSITION VECTOR
-    Position vector: TODO
-    TODO CHECKKKKKKKKKKKKK
     """
 
     def obtain_position_vector(self, x, y):
@@ -185,12 +182,12 @@ class PickleChild:
 
     """
     Obtains, displays, and exports the UNIT VECTOR
-    Unit vector: TODO
-    TODO CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
     """
     def obtain_unit_vector(self, vector):
+        #Converts input list into array and calculates its unit vector
         v = np.array(vector, dtype=float)
         mag = np.linalg.norm(v)
+        #If magnitude is zero, return zero-vector
         return v / mag if mag != 0 else np.zeros_like(v)
     #
 
@@ -205,8 +202,6 @@ class PickleChild:
 
     """
     Obtains, displays, and exports the PROJECTION VECTOR
-    Unit vector: TODO
-    TODO CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK 
     """
     def obtain_projection_vector(self, column1, column2):
         #Makes the columns arrays
@@ -235,35 +230,39 @@ class PickleChild:
 
     """
     Calculates the DOT PRODUCT
-    Dot product: TODO
-    TODO CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
     """
     def calculate_dot_product(self, vec1, vec2):
+        #Converts both inputs to numpy arrays for reliability
         vec1 = np.array(vec1, dtype = float)
         vec2 = np.array(vec2, dtype = float)
         """Return dot product and angle in degrees."""
+        #Computes dot product using numpy
         dot = np.dot(vec1, vec2)
+        #Denominator for angle calculation
         denom = np.linalg.norm(vec1) * np.linalg.norm(vec2)
 
+        #If zero-vector present, angle is undefined
         if denom == 0:
             angle = np.nan
         else:
             cosθ = dot / denom
+            #Avoid rounding issues using clipping
             cosθ = np.clip(cosθ, -1.0, 1.0)
+            #Angle in degrees
             angle = np.degrees(np.arccos(cosθ))
     
+        #Returns both values together
         return {"dot_product": dot, "angle_deg": angle}
     #
 
     """
     Checks the ORTHOGONALITY
-    Orthogonality: TODO
-    TODO CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
     """
     def check_orthogonality(self, vec1, vec2, tol=1e-10):
-        """Check if two vectors are orthogonal."""
+        #Converts inputs to numeric arrays
         v1 = np.array(vec1, dtype=float)
         v2 = np.array(vec2, dtype=float)
+        #Two vectors are orthogonal if their dot product is nearly zero
         return abs(np.dot(v1, v2)) < tol
     #
 
@@ -294,10 +293,9 @@ class PickleChild:
         return calculate_angle
 
     """
-    Makes a data frame full of all the permutations of a given column
-    Permutation: All possible orders of a column given an iterable
-    WARNING: CAN BE A LOT FOR YOUR COMPUTER - IT CRASHED MINE BUT I KNOW IT WORKS CAUSE ITS PERFECT FOR THE COLUMNS WITH VERY FEW VALUES (YEAR)
-    TODO: I added the iterable to see if it would run, it does but idk if we wanna keep it
+    Makes a DataFrame of all permutations from the unique values of a column.
+    Each row represents one permutation of length 'iterable'.
+    Each column in the resulting DataFrame corresponds to the position inside the permutation.
     """
     def generate_permutations(self, column, iterable):
         #Makes a sorted set of all the values in a column
@@ -317,8 +315,9 @@ class PickleChild:
     #
 
     """
-    Makes a data frame full of all the combinations of a given column
-    Combinations: All possible groups of a column
+    Makes a DataFrame of all combinations from the unique values of a column.
+    Each row represents one combination of length 'iterable'.
+    Each column in the resulting DataFrame corresponds to the position inside the combination.
     """
     def generate_combinations(self, column, iterable):
         #Makes a sorted set of all the values in a column
@@ -338,7 +337,8 @@ class PickleChild:
     #
 
     """
-    Takes in the column that you want the data from and returns it as a set
+    Returns all unique, non-null values from the selected column as a sorted list.
+    This serves as the input base for generating permutations and combinati
     """
     def obtain_unique_values(self, column):
         #Returns the data as a set (basically a list without repeats)
