@@ -319,6 +319,7 @@ class Spotify_PKL_Handler_Class(Spotify_Data_Handler_Class):
         """
         print(self.calculate_median(column))
     #
+
     def display_mode(self, column):
         """
         Purpose:
@@ -348,7 +349,6 @@ class Spotify_PKL_Handler_Class(Spotify_Data_Handler_Class):
         mean = self.calculate_mean(column)
         with open(f"output\Output_{column}_Mean.txt", 'w') as f:
             f.write(str(mean))
-        #
     #
 
     def export_median(self, column):
@@ -365,7 +365,6 @@ class Spotify_PKL_Handler_Class(Spotify_Data_Handler_Class):
         median = self.calculate_median(column)
         with open(f"output\Output_{column}_Median.txt", 'w') as f:
             f.write(str(median))
-        #
     #
 
     def export_mode(self, column):
@@ -382,7 +381,6 @@ class Spotify_PKL_Handler_Class(Spotify_Data_Handler_Class):
         mode = self.calculate_mode(column)
         with open(f"output\Output_{column}_Mode.txt", 'w') as f:
             f.write(str(mode))
-        #
     #
 
     def calculate_std(self, column):
